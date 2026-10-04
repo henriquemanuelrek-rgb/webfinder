@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="WebFinder — encontre sites conhecidos, esquecidos, antigos e difíceis de encontrar.">
+<title>WebFinder — Encontre o que a Web esqueceu</title>
+<style>
+:root{--bg:#080d19;--panel:#10182a;--panel2:#141e33;--line:#263451;--text:#eef4ff;--muted:#98a7c2;--accent:#38bdf8;--accent2:#a78bfa}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -10%,#172b4c 0,#080d19 42%);color:var(--text);font-family:Inter,Arial,sans-serif}
+header{height:72px;border-bottom:1px solid #1d2940;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:#080d19e8;backdrop-filter:blur(10px);position:sticky;top:0;z-index:10}.brand{font-size:24px;font-weight:900}.brand b{color:var(--accent)}.brand i{color:var(--accent2);font-style:normal}nav a{color:#aebbd0;text-decoration:none;margin-left:24px;font-size:14px}nav a:hover{color:#fff}
+.hero{max-width:1000px;margin:80px auto 50px;text-align:center;padding:0 20px}.pill{display:inline-block;border:1px solid #294563;background:#102139;color:#9bdcff;padding:8px 14px;border-radius:99px;font-size:13px}.hero h1{font-size:clamp(42px,7vw,74px);line-height:.98;letter-spacing:-3px;margin:20px 0}.hero h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));color:transparent;background-clip:text}.hero p{color:var(--muted);font-size:18px;line-height:1.65;max-width:700px;margin:0 auto 30px}
+.searchbox{display:flex;max-width:780px;margin:auto;background:#111a2c;border:1px solid #354664;padding:7px;border-radius:18px;box-shadow:0 20px 60px #0005}.searchbox input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;padding:17px;font-size:16px}.searchbox button{border:0;background:var(--accent);font-weight:800;border-radius:12px;padding:0 27px;cursor:pointer}.searchbox button:hover{filter:brightness(1.12)}
+.quick{max-width:850px;margin:18px auto;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.quick button{background:#10192b;color:#b9c7dc;border:1px solid #263650;border-radius:30px;padding:9px 14px;cursor:pointer}.quick button:hover{border-color:var(--accent);color:#fff}
+.wrap{max-width:1100px;margin:70px auto;padding:0 20px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.sectionhead h2{margin:0;font-size:22px}.sectionhead small{color:#71809b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px}.card{background:linear-gradient(145deg,#111a2d,#0d1525);border:1px solid var(--line);border-radius:17px;padding:20px;transition:.2s}.card:hover{transform:translateY(-3px);border-color:#3b587e}.card .type{color:#7dd3fc;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}.card h3{margin:8px 0}.card p{color:var(--muted);line-height:1.5;font-size:14px}.card a{color:#c4b5fd;text-decoration:none;font-weight:700}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.feature{padding:24px;background:#0e1728;border:1px solid var(--line);border-radius:17px}.feature .icon{font-size:28px}.feature h3{margin:12px 0 7px}.feature p{color:var(--muted);line-height:1.5;font-size:14px}.about{background:#0d1627;border:1px solid var(--line);border-radius:20px;padding:30px}.about p{color:var(--muted);line-height:1.7}.results{display:none}.empty{padding:40px;text-align:center;color:var(--muted);border:1px dashed #31415e;border-radius:16px}.back{display:none;color:#8bdcff;cursor:pointer;margin-bottom:18px}
+footer{text-align:center;border-top:1px solid #1c2840;padding:40px 20px;color:#667590;font-size:13px;margin-top:80px}
+@media(max-width:700px){nav{display:none}.hero{margin-top:55px}.hero h1{letter-spacing:-2px}.searchbox button{padding:0 17px}.features{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="brand">Web<b>Finder</b><i>⌁</i></div><nav><a href="#descobrir">Descobrir</a><a href="#como">Como funciona</a><a href="#sobre">Sobre</a></nav></header>
+
+<section class="hero">
+ <div class="pill">🔎 Encontre o que a Web esqueceu</div>
+ <h1>Descubra sites <span>difíceis de encontrar.</span></h1>
+ <p>Procure por nome, assunto ou até pela descrição do que você lembra. O WebFinder foi pensado para encontrar sites conhecidos, esquecidos, antigos e pouco descobertos.</p>
+ <form class="searchbox" id="form"><input id="q" placeholder="Ex.: site antigo de jogos de PS2..." autocomplete="off"><button>Pesquisar</button></form>
+ <div class="quick">
+  <button data-q="sites antigos">🕸️ Sites antigos</button><button data-q="jogos">🎮 Jogos</button><button data-q="estudos">📚 Estudos</button><button data-q="ferramentas">🛠️ Ferramentas</button><button data-q="música">🎵 Música</button><button data-q="filmes">🎬 Filmes</button>
+ </div>
+</section>
+
+<main>
+<section class="wrap" id="descobrir">
+ <div class="sectionhead"><h2 id="title">Descobertas em destaque</h2><small id="count"></small></div>
+ <div class="back" id="back">← Voltar às descobertas</div>
+ <div class="grid" id="cards"></div>
+ <div class="empty" id="empty" style="display:none">Não encontrei uma correspondência na base de demonstração. Na versão online, esta área poderá consultar uma API de pesquisa e arquivos da Web.</div>
+</section>
+
+<section class="wrap" id="como">
+ <div class="sectionhead"><h2>Como o WebFinder vai funcionar</h2></div>
+ <div class="features">
+  <div class="feature"><div class="icon">🧠</div><h3>Pesquisa por descrição</h3><p>Você não precisa lembrar o nome exato. Pode descrever o site que procura e o sistema poderá procurar correspondências.</p></div>
+  <div class="feature"><div class="icon">🕰️</div><h3>Web esquecida</h3><p>A ideia é facilitar a descoberta de páginas antigas e referências a sites que já não aparecem facilmente nas pesquisas comuns.</p></div>
+  <div class="feature"><div class="icon">🧭</div><h3>Descoberta</h3><p>Além de procurar algo específico, você poderá explorar categorias e encontrar sites que nem sabia que existiam.</p></div>
+ </div>
+</section>
+
+<section class="wrap" id="sobre">
+ <div class="about"><h2>Sobre o WebFinder</h2><p>O WebFinder é um projeto criado para tornar a descoberta da Web mais interessante. A primeira versão é um protótipo. A próxima etapa é conectar um motor de pesquisa real e serviços de arquivo da Web, mantendo uma interface simples e rápida.</p><p><strong>Frase do projeto:</strong> “Encontre o que a Web esqueceu.”</p></div>
+</section>
+</main>
+
+<footer>WebFinder © 2026 · Protótipo V2 · Logotipo definitivo será criado numa próxima etapa.</footer>
+
+<script>
+const sites=[
+ {n:"Internet Archive",t:"Sites antigos",d:"Biblioteca digital com páginas, livros, vídeos e outros conteúdos preservados.",u:"https://archive.org/"},
+ {n:"Wayback Machine",t:"Web arquivada",d:"Permite consultar versões antigas de muitas páginas da Web.",u:"https://web.archive.org/"},
+ {n:"itch.io",t:"Jogos",d:"Plataforma para descobrir jogos independentes e projetos de criadores.",u:"https://itch.io/"},
+ {n:"MDN Web Docs",t:"Tecnologia",d:"Documentação e materiais para aprender tecnologias da Web.",u:"https://developer.mozilla.org/"},
+ {n:"Khan Academy",t:"Estudos",d:"Aulas e exercícios gratuitos em várias áreas.",u:"https://www.khanacademy.org/"},
+ {n:"Project Gutenberg",t:"Estudos",d:"Biblioteca digital de livros em domínio público.",u:"https://www.gutenberg.org/"},
+ {n:"Bandcamp",t:"Música",d:"Descoberta de música e artistas independentes.",u:"https://bandcamp.com/"},
+ {n:"IMDb",t:"Filmes",d:"Base de dados de filmes, séries e informações sobre produções.",u:"https://www.imdb.com/"},
+ {n:"Wikimedia Commons",t:"Multimédia",d:"Coleção de imagens, áudio, vídeo e outros ficheiros livres.",u:"https://commons.wikimedia.org/"}
+];
+const cards=document.getElementById("cards"),q=document.getElementById("q"),title=document.getElementById("title"),count=document.getElementById("count"),empty=document.getElementById("empty"),back=document.getElementById("back");
+function render(term=""){
+ term=term.trim().toLowerCase();
+ let found=sites.filter(s=>(s.n+" "+s.t+" "+s.d).toLowerCase().includes(term));
+ cards.innerHTML=found.map(s=>`<article class="card"><div class="type">${s.t}</div><h3>${s.n}</h3><p>${s.d}</p><a href="${s.u}" target="_blank" rel="noopener">Visitar →</a></article>`).join("");
+ empty.style.display=found.length?"none":"block";
+ title.textContent=term?`Resultados para “${term}”`:"Descobertas em destaque";
+ count.textContent=found.length+" resultado"+(found.length===1?"":"s");
+ back.style.display=term?"block":"none";
+}
+document.getElementById("form").addEventListener("submit",e=>{e.preventDefault();render(q.value);document.getElementById("descobrir").scrollIntoView({behavior:"smooth"})});
+document.querySelectorAll(".quick").forEach(x=>x.addEventListener("click",e=>{if(e.target.dataset.q){q.value=e.target.dataset.q;render(q.value);document.getElementById("descobrir").scrollIntoView({behavior:"smooth"})}}));
+back.onclick=()=>{q.value="";render("")};
+render();
+</script>
+</body>
+</html>
